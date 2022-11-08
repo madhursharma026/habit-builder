@@ -10,6 +10,9 @@ export default function AddHabit() {
   const [habitName, setHabitName] = useState("")
   const [todaysHabit, setTodaysHabit] = useState([])
   const [allHabitUser, setAllHabitUser] = useState([])
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
+  const [alertMessageBg, setAlertMessageBg] = useState("")
 
   let todaysPointsList = []
   let TotalPointsList = []
@@ -53,7 +56,10 @@ export default function AddHabit() {
     let output = ""
     output = await result.json()
     if (output.HabbitName === habitName) {
-      alert("success")
+      // alert("success")
+      setShowAlert(true)
+      setAlertMessage("Category Added Successfully!")
+      setAlertMessageBg("success")
       setHabitName("")
       setPoints("")
       setTag("")
@@ -73,7 +79,10 @@ export default function AddHabit() {
         .catch(err => console.error(err));
 
     } else {
-      alert("danger")
+      // alert("danger")
+      setShowAlert(true)
+      setAlertMessage("Something went wrong!")
+      setAlertMessageBg("danger")
     }
   }
 
@@ -83,6 +92,15 @@ export default function AddHabit() {
   return (
     <>
       <div className={`container-md ${styles.making_mobile_size_scrn} p-0 ${styles.side_scrollbox_start}`}>
+        {
+          (showAlert === true) ?
+            <div class={`alert alert-dismissible alert-${alertMessageBg}`}>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" onClick={() => setShowAlert(false)}></button>
+              {alertMessage}
+            </div>
+            :
+            <></>
+        }
         <h1 className="text-center"><u>Habit Builder</u></h1>
         <div className="row mt-3 px-2 text-center">
           <h6 className="col-3">Date: {date}</h6>
